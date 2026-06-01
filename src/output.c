@@ -33,6 +33,9 @@ void scroll() {
 void draw_rows(struct abuf *ab){
   int y;
   for (y = 0; y < config.screen_rows; y++) {
+
+    ab_append(ab,"\x1b[48;5;235m",11);
+    
     int filerow = y + config.row_offset;
     if (filerow >= config.numrows) {
       if (config.numrows == 0 && y == config.screen_rows / 3) {;
@@ -45,9 +48,9 @@ void draw_rows(struct abuf *ab){
 	  padding--;
 	}
 	while (padding--) ab_append(ab," ",1);
-	ab_append(ab,"\x1b[38;5;38m",10);
+	ab_append(ab,"\x1b[38;5;38m\x1b[48;5;235m",21);
 	ab_append(ab,welcome,welcomelen);
-	ab_append(ab,"\x1b[0m",4);
+	ab_append(ab,"\x1b[39m",5);
       }
       else{
 	ab_append(ab,"~",1);
@@ -56,7 +59,18 @@ void draw_rows(struct abuf *ab){
       int len = config.row[filerow].render_size - config.column_offset;
       if (len < 0) len = 0;
       if (len > config.screen_columns) len = config.screen_columns;
-      ab_append(ab, &config.row[filerow].render[config.column_offset], len);
+      char *c = &config.row[filerow].render[config.column_offset];
+      ab_append(ab, "\x1b[48;5;235m", 11);
+
+      for (int i = 0; i < len; i++) {
+	if (isdigit((unsigned char)c[i])) {
+	  ab_append(ab, "\x1b[38;5;47m", 10);
+	  ab_append(ab, &c[i], 1);
+	  ab_append(ab, "\x1b[39m", 5);       
+	} else {
+	  ab_append(ab, &c[i], 1);
+	}
+      }
     }
     ab_append(ab,"\x1b[K",3);
     
