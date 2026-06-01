@@ -48,6 +48,7 @@ void save_file() {
       set_status_message("Aborted");
       return;
     }
+    select_highlight();
   };
 
   int len;
