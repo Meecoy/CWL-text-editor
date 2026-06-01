@@ -2,7 +2,7 @@
 #define DEFINITIONS_H
 
 #define CTRL_KEY(k) ((k) & 0x1f)
-#define CWL_VERSION "0.2.0"
+#define CWL_VERSION "0.2.1"
 #define TAB_STOP 4
 #define QUIT_INPUTS 2
 enum keys {

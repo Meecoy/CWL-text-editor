@@ -4,6 +4,7 @@
 #include "input.h"
 #include "definitions.h"
 #include "output.h"
+#include "row.h"
 
 void find_index_callback(char *query, int key) {
   static int last_match = -1;

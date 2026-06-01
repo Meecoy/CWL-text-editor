@@ -8,35 +8,7 @@
 #include "definitions.h"
 #include "abuf.h"
 #include <string.h>
-
-// MOVE IT LATER TO ROW.C
-
-int cx_to_rx(editor_row *row, int cx) {
-  int rx = 0;
-  for (int i = 0; i < cx; i++){
-    if(row->chars[i] == '\t')
-      rx += (TAB_STOP - 1) - (rx % TAB_STOP);
-    rx++;
-  }
-  return rx;
-}
-
-int rx_to_cx(editor_row *row, int rx){
-  int cur_rx = 0;
-  int cx;
-  
-  for(cx = 0; cx < row->size; cx++){
-    if (row->chars[cx] == '\t')
-      cur_rx += (TAB_STOP - 1) - (cur_rx % TAB_STOP);
-
-    cur_rx ++;
-
-    if (cur_rx > rx) return cx;
-  }
-  return cx;
-}
-
-// ------------------------
+#include "row.h"
 
 void scroll() {
   config.rx = 0;

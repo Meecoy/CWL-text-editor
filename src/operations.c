@@ -2,6 +2,7 @@
 #include <termios.h>
 #include "fileio.h"
 #include "definitions.h"
+#include "row.h"
 
 void insert_char(int c) {
   if(config.cy == config.numrows){
