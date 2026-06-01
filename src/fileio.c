@@ -14,6 +14,8 @@
 #include "definitions.h"
 #include "output.h"
 
+// MOVE IT LATER TO ROW.C
+
 void row_update(editor_row* row){
   int tabs = 0;
   for(int i = 0; i < row->size; i++) if(row->chars[i] == '\t') tabs++;
@@ -79,7 +81,7 @@ char *rows_to_string(int *buflen) {
 
   return buf;
 }
-
+// ---------------------
 void open_file(char *filename){
   free(config.filename);
   config.filename = strdup(filename);
@@ -100,6 +102,8 @@ void open_file(char *filename){
   fclose(fp);
   config.dirty = 0;
 }
+
+// MOVE IT LATER TO ROW.C
 
 void row_delete_char(editor_row *row, int at){
   if (at < 0 || at >= row->size) return;
@@ -131,9 +135,11 @@ void row_append_string(editor_row *row, char *s, size_t len){
   config.dirty++;
 }
 
+// ------------------------
+
 void save_file() {
   if (config.filename == NULL) {
-    config.filename = prompt("Save as: %s (ESC to cancel)");
+    config.filename = prompt("Save as: %s (ESC to cancel)", NULL);
     if (config.filename == NULL){
       set_status_message("Aborted");
       return;

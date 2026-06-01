@@ -2,8 +2,8 @@
 #define DEFINITIONS_H
 
 #define CTRL_KEY(k) ((k) & 0x1f)
-#define CWL_VERSION "0.1.0"
-#define TAB_STOP 8
+#define CWL_VERSION "0.2.0"
+#define TAB_STOP 4
 #define QUIT_INPUTS 2
 enum keys {
   BACKSPACE = 127,

@@ -8,8 +8,9 @@
 #include "operations.h"
 #include "fileio.h"
 #include "output.h"
+#include "find.h"
 
-char *prompt(char *prompt){
+char *prompt(char *prompt, void (*callback)(char *, int)){
   size_t bufsize = 128;
   char *buf = malloc(bufsize);
 
@@ -25,11 +26,13 @@ char *prompt(char *prompt){
       if (buflen != 0) buf[--buflen] = '\0';
     } else if(c == '\x1b'){
       set_status_message("");
+      if (callback) callback(buf,c);
       free(buf);
       return NULL;
     } else if (c == '\r'){
       if(buflen != 0){
 	set_status_message("");
+	if (callback) callback(buf,c);
 	return buf;
       }
     } else if (!iscntrl(c) && c < 128) {
@@ -40,6 +43,8 @@ char *prompt(char *prompt){
       buf[buflen++] = c;
       buf[buflen] = '\0';
     }
+
+    if (callback) callback(buf,c);
   }
 }
 
@@ -97,6 +102,11 @@ void process_keypress() {
   case CTRL_KEY('s'):
     save_file();
     break;
+
+  case CTRL_KEY('f'):
+    find_index();
+    break;
+    
   case HOME_KEY:
     config.cx = 0;
     break;

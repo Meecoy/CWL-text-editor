@@ -3,5 +3,5 @@
 
 void process_keypress();
 
-char *prompt(char *prompt);
+char *prompt(char *prompt, void (*callback)(char *, int));
 #endif
