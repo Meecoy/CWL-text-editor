@@ -5,6 +5,8 @@
 #define CWL_VERSION "0.2.1"
 #define TAB_STOP 4
 #define QUIT_INPUTS 2
+#define HL_HIGHLIGHT_NUMBERS (1<<0)
+
 enum keys {
   BACKSPACE = 127,
   ARROW_LEFT = 1000,
@@ -18,12 +20,31 @@ enum keys {
   PAGE_DOWN
 };
 
+enum highlight {
+  HL_NORMAL = 0,
+  HL_NUMBER,
+  HL_MATCH
+};
+
 typedef struct editor_row{
   int size;
   int render_size;
-  char* chars;
-  char* render;
+  char *chars;
+  char *render;
+  unsigned char *hl;
 } editor_row;
+
+struct editor_syntax {
+  char *filetype;
+  char **filematch;
+  int flags;
+};
+
+extern char *C_HL_extensions[];
+
+extern struct editor_syntax HLDB[];
+
+extern int hldb_entries;
 
 struct editor_config {
   int cx, cy;
@@ -38,6 +59,7 @@ struct editor_config {
   char *filename;
   char statusmsg[80];
   time_t statusmsg_time;
+  struct editor_syntax *syntax;
   struct termios origin_t;
 };
 

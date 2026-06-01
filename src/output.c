@@ -9,6 +9,7 @@
 #include "abuf.h"
 #include <string.h>
 #include "row.h"
+#include "highlight.h"
 
 void scroll() {
   config.rx = 0;
@@ -60,17 +61,30 @@ void draw_rows(struct abuf *ab){
       if (len < 0) len = 0;
       if (len > config.screen_columns) len = config.screen_columns;
       char *c = &config.row[filerow].render[config.column_offset];
+      unsigned char *hl = &config.row[filerow].hl[config.column_offset];
+      int current_color = -1;
+      
       ab_append(ab, "\x1b[48;5;235m", 11);
 
       for (int i = 0; i < len; i++) {
-	if (isdigit((unsigned char)c[i])) {
-	  ab_append(ab, "\x1b[38;5;47m", 10);
+	if (hl[i] == HL_NORMAL) {
+	  if (current_color != -1){
+	    ab_append(ab, "\x1b[39m", 5);
+	    current_color = -1;
+	  }
 	  ab_append(ab, &c[i], 1);
-	  ab_append(ab, "\x1b[39m", 5);       
 	} else {
+	  int color = syntax_to_color(hl[i]);
+	  if (color != current_color) {
+	    current_color = color;
+	    char buf[16];
+	    int c_len = snprintf(buf, sizeof(buf), "\x1b[38;5;%dm", color);
+	    ab_append(ab, buf, c_len);
+	  }
 	  ab_append(ab, &c[i], 1);
 	}
       }
+      ab_append(ab, "\x1b[39m", 5);
     }
     ab_append(ab,"\x1b[K",3);
     
@@ -87,7 +101,7 @@ void status_bar(struct abuf *ab){
   int len = snprintf(status, sizeof(status), " %.20s - %d lines %s",
 		     config.filename ? config.filename : "[No File]",
 		     config.numrows, config.dirty ? "| unsaved" : "");
-  int rlen = snprintf(rstatus, sizeof(rstatus), "%d/%d", config.cy + 1, config.numrows);
+  int rlen = snprintf(rstatus, sizeof(rstatus), "%s | %d/%d", config.syntax ? config.syntax->filetype : "None", config.cy + 1, config.numrows);
   
   if (len > config.screen_columns) len = config.screen_columns;
   ab_append(ab, status, len);

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "definitions.h"
 #include "input.h"
-
+#include "highlight.h"
 
 int cx_to_rx(editor_row *row, int cx) {
   int rx = 0;
@@ -47,6 +47,8 @@ void row_update(editor_row* row){
   }
   row->render[idx] = '\0';
   row->render_size = idx;
+
+  update_syntax(row);
 }
 
 void row_insert(int at, char *s, size_t len){
@@ -61,6 +63,7 @@ void row_insert(int at, char *s, size_t len){
 
   config.row[at].render_size = 0;
   config.row[at].render = NULL;
+  config.row[at].hl = NULL;
   row_update(&config.row[at]);
   
   config.numrows++;
@@ -107,6 +110,7 @@ void row_delete_char(editor_row *row, int at){
 void row_free(editor_row *row){
   free(row->render);
   free(row->chars);
+  free(row->hl);
 }
 
 void row_delete(int at) {

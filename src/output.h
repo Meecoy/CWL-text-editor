@@ -1,5 +1,5 @@
 #ifndef OUTPUT_H
-#define OUTPUT_h
+#define OUTPUT_H
 
 #include "definitions.h"
 

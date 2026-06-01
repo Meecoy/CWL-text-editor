@@ -9,15 +9,20 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
+#include <ctype.h>
 #include "input.h"
 #include "terminal.h"
 #include "definitions.h"
 #include "output.h"
 #include "row.h"
+#include "highlight.h"
 
 void open_file(char *filename){
   free(config.filename);
   config.filename = strdup(filename);
+
+  select_highlight();
+
   FILE *fp = fopen(filename, "r");
   if (!fp) error("Can't open the file.");
 

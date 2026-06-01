@@ -12,6 +12,18 @@
 
 struct editor_config config;
 
+char *C_HL_extensions[] = {".c",".cpp",".h", NULL};
+
+struct editor_syntax HLDB[] = {
+  {
+    "c",
+    C_HL_extensions,
+    HL_HIGHLIGHT_NUMBERS
+  },
+};
+
+int hldb_entries = sizeof(HLDB) / sizeof(HLDB[0]);
+
 void init() {
   config.cx = 0;
   config.cy = 0;
@@ -24,6 +36,8 @@ void init() {
   config.filename = NULL;
   config.statusmsg[0] = '\0';
   config.statusmsg_time = 0;
+  config.syntax = NULL;
+  
   if (get_window_size(&config.screen_rows, &config.screen_columns) == -1) error("Unable to get windows size.");
   config.screen_rows -= 2;
 }
