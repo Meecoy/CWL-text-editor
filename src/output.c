@@ -24,10 +24,10 @@ void scroll() {
     config.row_offset = config.cy - config.screen_rows + 1;
   }
   else if (config.rx < config.column_offset) {
-    config.column_offset = config.cx;
+    config.column_offset = config.rx;
   }
   else if ( config.rx >= config.column_offset + config.screen_columns) {
-    config.column_offset = config.cx - config.screen_columns + 1;
+    config.column_offset = config.rx - config.screen_columns + 1;
   }
 }
 

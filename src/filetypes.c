@@ -9,8 +9,9 @@ char *C_HL_keywords[] = {
   "struct", "union", "typedef", "static", "enum", "class", "case",
   
   "int|", "long|", "double|", "float|", "char|", "unsigned|", "signed|",
-  "void|", NULL
+  "void|", "#include", "#define|", "#pragma|", NULL
 };
+
 
 struct editor_syntax HLDB[] = {
   {
