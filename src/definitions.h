@@ -6,6 +6,10 @@
 #define TAB_STOP 4
 #define QUIT_INPUTS 2
 #define HL_HIGHLIGHT_NUMBERS (1<<0)
+#define HL_HIGHLIGHT_STRINGS (1<<1)
+
+#include <termios.h>
+#include <time.h>
 
 enum keys {
   BACKSPACE = 127,
@@ -23,7 +27,11 @@ enum keys {
 enum highlight {
   HL_NORMAL = 0,
   HL_NUMBER,
-  HL_MATCH
+  HL_MATCH,
+  HL_STRING,
+  HL_COMMENT,
+  HL_KEYWORD,
+  HL_TYPE
 };
 
 typedef struct editor_row{
@@ -37,14 +45,10 @@ typedef struct editor_row{
 struct editor_syntax {
   char *filetype;
   char **filematch;
+  char **keywords;
+  char *sl_comments;
   int flags;
 };
-
-extern char *C_HL_extensions[];
-
-extern struct editor_syntax HLDB[];
-
-extern int hldb_entries;
 
 struct editor_config {
   int cx, cy;

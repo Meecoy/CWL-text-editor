@@ -9,20 +9,9 @@
 #include "output.h"
 #include "definitions.h"
 #include "fileio.h"
+#include "filetypes.h"
 
 struct editor_config config;
-
-char *C_HL_extensions[] = {".c",".cpp",".h", NULL};
-
-struct editor_syntax HLDB[] = {
-  {
-    "c",
-    C_HL_extensions,
-    HL_HIGHLIGHT_NUMBERS
-  },
-};
-
-int hldb_entries = sizeof(HLDB) / sizeof(HLDB[0]);
 
 void init() {
   config.cx = 0;
