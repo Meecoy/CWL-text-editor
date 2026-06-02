@@ -53,8 +53,8 @@ void find_index_callback(char *query, int key) {
 
 
       saved_hl_line = current;
-      saved_hl = malloc(row->size);
-      memcpy(saved_hl, row->hl, row->size);
+      saved_hl = malloc(row->render_size);
+      memcpy(saved_hl, row->hl, row->render_size);
       memset(&row->hl[match - row->render], HL_MATCH, strlen(query));
       
       break;
