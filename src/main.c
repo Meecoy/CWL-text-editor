@@ -1,15 +1,11 @@
-#include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <time.h>
 #include "terminal.h"
 #include "input.h"
 #include "output.h"
 #include "definitions.h"
 #include "fileio.h"
-#include "filetypes.h"
 
 struct editor_config config;
 

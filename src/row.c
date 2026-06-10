@@ -2,7 +2,6 @@
 #include <termios.h>
 #include <string.h>
 #include "definitions.h"
-#include "input.h"
 #include "highlight.h"
 
 int cx_to_rx(editor_row *row, int cx) {

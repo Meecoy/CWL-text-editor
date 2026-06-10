@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include <stdarg.h>
 #include <time.h>
 #include "definitions.h"

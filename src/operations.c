@@ -1,6 +1,4 @@
-#include <stdlib.h>
 #include <termios.h>
-#include "fileio.h"
 #include "definitions.h"
 #include "row.h"
 

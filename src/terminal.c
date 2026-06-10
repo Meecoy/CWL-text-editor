@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <termios.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include "definitions.h"
 #include <sys/ioctl.h>
 

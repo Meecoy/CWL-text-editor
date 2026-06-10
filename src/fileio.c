@@ -9,7 +9,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-#include <ctype.h>
 #include "input.h"
 #include "terminal.h"
 #include "definitions.h"
